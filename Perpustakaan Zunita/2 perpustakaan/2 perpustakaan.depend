@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1732159315 source:d:\2 perpustakaan\main.cpp
+	<iostream>
+	<vector>
+	<string>
+
