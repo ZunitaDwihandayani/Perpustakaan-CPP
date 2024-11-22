@@ -1,6 +1,5 @@
 #include <iostream>
 #include <string>
-
 using namespace std;
 
 // Struktur data untuk Buku
@@ -21,12 +20,8 @@ struct peminjam {
     bool statusPinjam; // true jika buku dipinjam, false jika dikembalikan
 };
 
-// Menentukan kapasitas maksimal array
-const int MAX_BUKU = 20;  // Kapasitas maksimal buku
-const int MAX_SISWA = 40; // Kapasitas maksimal siswa
-
-// Data buku yang tersedia
-databuku buku[MAX_BUKU] = {
+// Data buku yang tersedia (array statis)
+databuku buku[100] = {
     {"1", "Anak Semua Bangsa", "Bentang Pustaka", 3},
     {"2", "Ayah", "Bentang Pustaka", 3},
     {"3", "Bumi Manusia", "Pustaka Sastra", 3},
@@ -41,18 +36,19 @@ databuku buku[MAX_BUKU] = {
     {"12", "Pulang", "Bentang Pustaka", 3},
     {"13", "Sang Pemimpi", "Pustaka Sastra", 3},
     {"14", "Si Anak Pintar", "Bentang Pustaka", 3},
-    {"15", "Supernova", "Bentang Pustaka", 3},
+    {"15", "Supernova", "Bentang Pustaka", 3}
 };
 
-// Data peminjam siswa
-peminjam siswa[MAX_SISWA] = {
+int jumlahBuku = 15;  // Menyimpan jumlah buku yang tersedia (jumlah buku yang dimasukkan ke dalam array)
+
+// Data peminjam siswa (array statis)
+peminjam siswa[100] = {
     {1, "ALDA ANASTASIA ADRIANA", "9801109826", "X MP 1", "", false},
     {2, "AKMALUSIRI DINATA", "3419300280", "XI ULW 1", "", false},
-    // Add other students as needed
+    // Tambahkan siswa lainnya sesuai kebutuhan
 };
 
-int jumlahBuku = 15;  // Menghitung jumlah buku yang ada
-int jumlahSiswa = 39; // Menghitung jumlah siswa yang ada
+int jumlahSiswa = 2;  // Menyimpan jumlah siswa yang ada (jumlah siswa yang dimasukkan ke dalam array)
 
 // Fungsi untuk menampilkan daftar buku
 void tampilkanBuku() {
@@ -83,7 +79,7 @@ void tampilkanSiswaPeminjam() {
 
 // Fungsi untuk menambahkan buku baru
 void tambahBuku() {
-    if (jumlahBuku >= MAX_BUKU) {
+    if (jumlahBuku >= 100) {
         cout << "Maaf, kapasitas buku sudah penuh.\n";
         return;
     }
@@ -115,7 +111,7 @@ void tambahPeminjam() {
     int nomorSiswa;
     string isbnBuku;
 
-    if (jumlahSiswa >= MAX_SISWA) {
+    if (jumlahSiswa >= 100) {
         cout << "Maaf, kapasitas siswa sudah penuh.\n";
         return;
     }
