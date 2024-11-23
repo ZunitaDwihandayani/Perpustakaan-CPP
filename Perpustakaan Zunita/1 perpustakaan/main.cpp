@@ -39,8 +39,6 @@ databuku buku[100] = {
     {"15", "Supernova", "Bentang Pustaka", 3}
 };
 
-int jumlahBuku = 15;  // Menyimpan jumlah buku yang tersedia (jumlah buku yang dimasukkan ke dalam array)
-
 // Data peminjam siswa (array statis)
 peminjam siswa[100] = {
     {1, "ALDA ANASTASIA ADRIANA", "9801109826", "X MP 1", "", false},
@@ -48,12 +46,10 @@ peminjam siswa[100] = {
     // Tambahkan siswa lainnya sesuai kebutuhan
 };
 
-int jumlahSiswa = 2;  // Menyimpan jumlah siswa yang ada (jumlah siswa yang dimasukkan ke dalam array)
-
 // Fungsi untuk menampilkan daftar buku
 void tampilkanBuku() {
     cout << "\nDaftar Buku:\n";
-    for (int i = 0; i < jumlahBuku; i++) {
+    for (int i = 0; i < 15; i++) {  // Menampilkan buku yang ada
         cout << "ISBN: " << buku[i].ISBN
              << ", Judul: " << buku[i].judul
              << ", Penerbit: " << buku[i].penerbit
@@ -65,7 +61,7 @@ void tampilkanBuku() {
 void tampilkanSiswaPeminjam() {
     cout << "\nDaftar Siswa Peminjam Buku:\n";
     bool adaPeminjam = false;
-    for (int i = 0; i < jumlahSiswa; i++) {
+    for (int i = 0; i < 100; i++) {  // Menampilkan siswa yang meminjam buku
         if (siswa[i].statusPinjam) {
             cout << "Nama: " << siswa[i].nama
                  << ", Buku yang dipinjam: " << siswa[i].bukuPinjam << endl;
@@ -79,11 +75,6 @@ void tampilkanSiswaPeminjam() {
 
 // Fungsi untuk menambahkan buku baru
 void tambahBuku() {
-    if (jumlahBuku >= 100) {
-        cout << "Maaf, kapasitas buku sudah penuh.\n";
-        return;
-    }
-
     string ISBN, judul, penerbit;
     int jumlah;
 
@@ -97,13 +88,18 @@ void tambahBuku() {
     cout << "Masukkan Jumlah buku yang akan ditambahkan: ";
     cin >> jumlah;
 
-    buku[jumlahBuku].ISBN = ISBN;
-    buku[jumlahBuku].judul = judul;
-    buku[jumlahBuku].penerbit = penerbit;
-    buku[jumlahBuku].jumlah = jumlah;
-
-    jumlahBuku++;  // Menambahkan jumlah buku
-    cout << "Buku baru berhasil ditambahkan!\n";
+    // Cari indeks buku yang kosong untuk dimasukkan
+    for (int i = 0; i < 100; i++) {
+        if (buku[i].ISBN.empty()) {  // Cek apakah posisi ini kosong
+            buku[i].ISBN = ISBN;
+            buku[i].judul = judul;
+            buku[i].penerbit = penerbit;
+            buku[i].jumlah = jumlah;
+            cout << "Buku baru berhasil ditambahkan!\n";
+            return;
+        }
+    }
+    cout << "Maaf, kapasitas buku sudah penuh.\n";
 }
 
 // Fungsi untuk menambahkan siswa peminjam
@@ -111,20 +107,17 @@ void tambahPeminjam() {
     int nomorSiswa;
     string isbnBuku;
 
-    if (jumlahSiswa >= 100) {
-        cout << "Maaf, kapasitas siswa sudah penuh.\n";
-        return;
-    }
-
     cout << "\nDaftar Siswa:\n";
-    for (int i = 0; i < jumlahSiswa; i++) {
-        cout << siswa[i].no << ". " << siswa[i].nama << " (" << siswa[i].kelas << ")\n";
+    for (int i = 0; i < 100; i++) {  // Menampilkan semua siswa yang ada
+        if (!siswa[i].nama.empty()) {
+            cout << siswa[i].no << ". " << siswa[i].nama << " (" << siswa[i].kelas << ")\n";
+        }
     }
 
     cout << "\nMasukkan nomor siswa yang akan meminjam buku: ";
     cin >> nomorSiswa;
 
-    if (nomorSiswa < 1 || nomorSiswa > jumlahSiswa) {
+    if (nomorSiswa < 1 || nomorSiswa > 100 || siswa[nomorSiswa - 1].nama.empty()) {
         cout << "Nomor siswa tidak valid.\n";
         return;
     }
@@ -143,7 +136,7 @@ void tambahPeminjam() {
     cin >> isbnBuku;
 
     bool bukuDitemukan = false;
-    for (int i = 0; i < jumlahBuku; i++) {
+    for (int i = 0; i < 100; i++) {
         if (buku[i].ISBN == isbnBuku) {
             bukuDitemukan = true;
 
