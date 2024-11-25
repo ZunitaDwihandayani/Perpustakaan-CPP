@@ -102,7 +102,32 @@ void tambahBuku() {
     cout << "Maaf, kapasitas buku sudah penuh.\n";
 }
 
-// Fungsi untuk menambahkan siswa peminjam
+// Fungsi untuk menambahkan siswa baru
+void tambahSiswa() {
+    string nama, nisn, kelas;
+
+    // Cari siswa yang belum ada
+    for (int i = 0; i < 100; i++) {
+        if (siswa[i].nama.empty()) {  // Jika nama kosong, berarti posisi bisa diisi
+            cout << "Masukkan nama siswa: ";
+            cin.ignore();
+            getline(cin, siswa[i].nama);  // Input nama siswa
+            cout << "Masukkan NISN siswa: ";
+            getline(cin, siswa[i].NISN);  // Input NISN siswa
+            cout << "Masukkan kelas siswa: ";
+            getline(cin, siswa[i].kelas);  // Input kelas siswa
+
+            siswa[i].no = i + 1;  // Mengisi nomor siswa dengan urutan
+            siswa[i].statusPinjam = false;  // Status pinjam belum
+            siswa[i].bukuPinjam = "";  // Tidak ada buku yang dipinjam
+            cout << "Siswa berhasil ditambahkan!\n";
+            return;
+        }
+    }
+    cout << "Maaf, kapasitas siswa sudah penuh.\n";
+}
+
+// Fungsi untuk menambahkan peminjam
 void tambahPeminjam() {
     int nomorSiswa;
     string isbnBuku;
@@ -168,7 +193,8 @@ int main() {
         cout << "3. Tambah Buku\n";
         cout << "4. Tambah Peminjam\n";
         cout << "5. Keluar\n";
-        cout << "Pilih menu (1-5): ";
+        cout << "6. Tambah Siswa Baru\n";  // Pilihan baru untuk menambah siswa
+        cout << "Pilih menu (1-6): ";
         cin >> pilihan;
         cin.ignore();  // Membersihkan buffer input
 
@@ -183,10 +209,11 @@ int main() {
         } else if (pilihan == 5) {
             cout << "Keluar dari program.\n";
             break;  // Keluar dari perulangan dan program
+        } else if (pilihan == 6) {
+            tambahSiswa();  // Menambahkan siswa baru
         } else {
             cout << "Pilihan tidak valid, silahkan coba lagi.\n";
         }
     }
-
     return 0;
 }
